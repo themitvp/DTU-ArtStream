@@ -1,0 +1,48 @@
+<h1>Setup</h1>
+<div class="col-sm-6">
+	<h3>Displays <a class="pull-right btn btn-primary btn-xs" ng-click="createDisplay()" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a></h3>
+	<div ui-tree data-clone-enabled="true" data-nodrop-enabled="true">
+		<ol ui-tree-nodes ng-model="displays">
+			<li ui-tree-node ng-repeat="display in displays" >
+				<div ui-tree-handle>
+					<span>#{{display.id}} - </span>
+					<span>{{display.name}}</span>
+					<span class="label label-primary">{{display.location}}</span>
+					<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)">
+						<span class="glyphicon glyphicon-remove"></span>
+					</a>
+				</div>
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="col-sm-6">
+	<h3>Display Groups <a class="pull-right btn btn-primary btn-xs" ng-click="newItem()" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a></h3>
+	<div ui-tree data-clone-enabled="true">
+		<ol ui-tree-nodes ng-model="displaygroups">
+			<li ui-tree-node ng-repeat="displaygroup in displaygroups" >
+				<div ui-tree-handle>
+					<span>#{{displaygroup.id}} - </span>
+					<span>{{displaygroup.name}}</span>
+					<span class="label label-primary">{{displaygroup.location}}</span>
+					
+					<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)">
+						<span class="glyphicon glyphicon-remove"></span>
+					</a>
+				</div>
+				<ol ui-tree-nodes="" ng-model="displaygroup.subdisplays">
+					<li ng-repeat="subDisplay in displaygroup.subdisplays" ui-tree-node>
+						<div ui-tree-handle>
+							<span>#{{subDisplay.id}} - </span>
+							<span>{{subDisplay.name}}</span>
+							<span class="label label-primary">{{subDisplay.location}}</span>
+							<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)">
+								<span class="glyphicon glyphicon-remove"></span>
+							</a>
+						</div>
+					</li>
+				</ol>
+			</li>
+		</ol>
+	</div>
+</div>

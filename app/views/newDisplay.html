@@ -1,0 +1,29 @@
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<form name="newDisplayForm" ng-submit="newDisplay()">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Add Display</h4>
+				</div>
+				<div class="modal-body">
+					<p>Type in the name and location of the new display</p>
+
+					<div class="form-group">
+						<label for="name">Name</label>
+						<input type="text" class="form-control" ng-model="newDisplayName" id="name" placeholder="Etc. Patient Display, Kids Display..." required>
+					</div>
+					<div class="form-group">
+						<label for="location">Location</label>
+						<input type="text" class="form-control" id="location" ng-model="newDisplayLocation" placeholder="Etc. Room 222, Reception..." required>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success">Create</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
