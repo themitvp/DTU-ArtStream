@@ -1,7 +1,7 @@
 app.controller('setupController', function( $scope, $http, $location, $routeSegment, Page, $uibModal ) {
 	$scope.Page = Page;
 	$scope.$routeSegment = $routeSegment;
-	$scope.modalInstance = null;
+	
 
 	$scope.toggle = function (scope) {
 		scope.toggle();
@@ -9,12 +9,6 @@ app.controller('setupController', function( $scope, $http, $location, $routeSegm
 
 	$scope.remove = function (scope) {
 		scope.remove();
-	};
-
-	$scope.createDisplay = function() {
-		$scope.modalInstance = $uibModal.open({
-            templateUrl: 'app/views/newDisplay.html?1'
-        });
 	};
 
 	$scope.newDisplay = function (scope) {
@@ -27,8 +21,6 @@ app.controller('setupController', function( $scope, $http, $location, $routeSegm
 
 		$scope.newDisplayName = "";
 		$scope.newDisplayLocation = "";
-
-        $modalInstance.dismiss();
 	};
 
 	$scope.displays = [
