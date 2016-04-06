@@ -45,8 +45,8 @@ body {
 .collection {
     margin: 0;
     cursor: pointer;
-    transition: background-color 0.4s;
-    -webkit-transition: background-color 0.4s;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
 }
 
 .collection:after {
@@ -72,6 +72,12 @@ body {
 .collection .container {
     padding-top: 5em;
     padding-bottom: 5em;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+}
+
+.collection.active .container {
+    padding-bottom: 50vh;
 }
 
 .collection h1 {

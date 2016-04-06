@@ -1,4 +1,4 @@
-<div class="row collection" ng-repeat="collection in collections">
+<div class="row collection" ng-repeat="collection in collections" ng-click="toggleCollection(collection.id)" ng-class="{'active': activeCollection == collection.id}">
 	<div class="container">
 		<div class="col-sm-8" ng-class-even="'collection-art-right'">
 			<div class="row img-slice-container">
