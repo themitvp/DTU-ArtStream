@@ -1,8 +1,8 @@
 <div class="row collection" ng-repeat="collection in collections">
 	<div class="container">
-		<div class="col-sm-8" ng-class-even="'pull-right'">
+		<div class="col-sm-8" ng-class-even="'collection-art-right'">
 			<div class="row img-slice-container">
-				<div ng-repeat="art in collection.art" class="col-xs-4 collection-art diagonal">
+				<div ng-repeat="art in collection.art" class="col-xs-6 col-sm-4 collection-art diagonal">
 				<div class="collection-art-inner">
 						<img class="" ng-src="{{art.url}}">
 					</div>
@@ -10,7 +10,7 @@
 			</div>
 		</div>
 		<div class="col-sm-4">
-			<div class="collection-info" ng-class-odd="'text-right'">
+			<div class="collection-info" ng-class-odd="'collection-text-right'">
 				<h1>{{collection.name}}</h1>
 				<p>{{collection.description}}</p>
 			</div>
