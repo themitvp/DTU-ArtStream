@@ -37,10 +37,18 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="explore">Explore</a></li>
-                    <li><a href="search">Search</a></li>
-                    <li><a href="dashboard">Dashboard</a></li>
-                    <li><a href="setup">Setup Displays</a></li>
+                    <li ng-class="{active: ('explore' | routeSegmentContains)}">
+                        <a href="/">Explore</a>
+                    </li>
+                    <li ng-class="{active: ('search' | routeSegmentContains)}">
+                        <a href="/search">Search</a>
+                    </li>
+                    <li ng-class="{active: ('dashboard' | routeSegmentContains)}">
+                        <a href="/dashboard">Dashboard</a>
+                    </li>
+                    <li ng-class="{active: ('setup' | routeSegmentContains)}">
+                        <a href="/setup">Setup Displays</a>
+                    </li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
