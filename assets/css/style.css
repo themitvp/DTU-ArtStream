@@ -18,7 +18,76 @@ body {
     background: #f8faff;
     border: 1px solid #dae2ea;
     color: #7c9eb2;
-    padding: 10px 10px;
+    padding: 0;
+    margin-bottom: 7px;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+    display: flex;
+}
+
+.angular-ui-tree-handle:hover {
+    color: #438eb9;
+    background: #f4f6f7;
+    border-color: #dce2e8;
+}
+
+.art-tree-column {
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 0 0 10px;
+    flex-grow: 1;
+}
+
+.art-tree-column .label {
+    float: right;
+    line-height: 37px;
+    width: 150px;
+    text-align: left;
+    height: 100%;
+    background: #EFEFEF;
+    border-radius: 0;
+}
+
+.art-tree-column:first-child {
+    border-right: 1px solid #dae2ea;
+    max-width: 50px;
+    flex-basis: 50px;
+    text-align: center;
+    padding: 0;
+}
+
+.art-tree-column:last-child {
+    border-left: 1px solid #dae2ea;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+    max-width: 40px;
+    flex-basis: 40px;
+    padding: 0;
+}
+
+.art-tree-column:last-child a {
+    border: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1.8;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+
+.art-tree-column:last-child:hover {
+    background-color: #E74C3C;
+}
+
+
+.angular-ui-tree-nodes .angular-ui-tree-nodes {
+    padding-left: 50px;
+}
+
+.angular-ui-tree-nodes .angular-ui-tree-nodes li:last-child {
+    padding-bottom: 15px;
 }
 
 .angular-ui-tree-placeholder {
@@ -35,11 +104,20 @@ body {
 .tree-node-content {
     margin: 10px;
 }
+
 .tree-handle {
     padding: 10px;
     background: #428bca;
     color: #FFF;
     margin-right: 10px;
+}
+
+.displaygroup {
+    cursor: pointer;
+}
+
+.displaygroup .collapser {
+    color: #2c3e50;
 }
 
 .collection {

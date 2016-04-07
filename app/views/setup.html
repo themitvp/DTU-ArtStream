@@ -6,12 +6,16 @@
 				<ol ui-tree-nodes ng-model="displays">
 					<li ui-tree-node ng-repeat="display in displays" >
 						<div ui-tree-handle>
-							<span>#{{display.id}} - </span>
-							<span>{{display.name}}</span>
-							<span class="label label-primary">{{display.location}}</span>
-							<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)">
-								<span class="glyphicon glyphicon-remove"></span>
-							</a>
+							<div class="art-tree-column">#{{display.id}}</div>
+							<div class="art-tree-column">
+								{{display.name}}
+								<span class="label text-primary">{{display.location}}</span>
+							</div>
+							<div class="art-tree-column pull-right">
+								<a class="btn text-danger btn-xs" data-nodrag ng-click="remove(this)">
+									<span class="glyphicon glyphicon-remove"></span>
+								</a>
+							</div>
 						</div>
 					</li>
 				</ol>
@@ -22,24 +26,35 @@
 			<div ui-tree data-clone-enabled="true">
 				<ol ui-tree-nodes ng-model="displaygroups">
 					<li ui-tree-node ng-repeat="displaygroup in displaygroups" >
-						<div ui-tree-handle>
-							<span>#{{displaygroup.id}} - </span>
-							<span>{{displaygroup.name}}</span>
-							<span class="label label-primary">{{displaygroup.location}}</span>
-
-							<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)">
-								<span class="glyphicon glyphicon-remove"></span>
-							</a>
+						<div ui-tree-handle data-nodrag class="displaygroup" ng-click="toggle(this)">
+							<div class="art-tree-column">
+								<a class="btn-xs collapser" ng-if="displaygroup.subdisplays && displaygroup.subdisplays.length > 0">
+									<span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}"></span>
+								</a>
+							</div>
+							<div class="art-tree-column">
+								{{displaygroup.name}}
+								<span class="label text-primary">{{displaygroup.location}}</span>
+							</div>
+							<div class="art-tree-column pull-right">
+								<a class="btn text-danger btn-xs" data-nodrag ng-click="remove(this)">
+									<span class="glyphicon glyphicon-remove"></span>
+								</a>
+							</div>
 						</div>
-						<ol ui-tree-nodes="" ng-model="displaygroup.subdisplays">
+						<ol ui-tree-nodes="" ng-model="displaygroup.subdisplays" class="subdisplays" ng-class="{hidden: collapsed}">
 							<li ng-repeat="subDisplay in displaygroup.subdisplays" ui-tree-node>
 								<div ui-tree-handle>
-									<span>#{{subDisplay.id}} - </span>
-									<span>{{subDisplay.name}}</span>
-									<span class="label label-primary">{{subDisplay.location}}</span>
-									<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)">
-										<span class="glyphicon glyphicon-remove"></span>
-									</a>
+									<div class="art-tree-column">#{{subDisplay.id}}</div>
+									<div class="art-tree-column">
+										{{subDisplay.name}}
+										<span class="label text-primary">{{subDisplay.location}}</span>
+									</div>
+									<div class="art-tree-column pull-right">
+										<a class="btn text-danger btn-xs" data-nodrag ng-click="remove(this)">
+											<span class="glyphicon glyphicon-remove"></span>
+										</a>
+									</div>
 								</div>
 							</li>
 						</ol>
