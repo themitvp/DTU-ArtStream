@@ -45,8 +45,8 @@ body {
 .collection {
     margin: 0;
     cursor: pointer;
-    transition: all 0.4s;
     -webkit-transition: all 0.4s;
+    transition: all 0.4s;
 }
 
 .collection:after {
@@ -73,16 +73,14 @@ body {
     position: relative;
     padding-top: 5em;
     padding-bottom: 5em;
-    transition: all 0.4s;
     -webkit-transition: all 0.4s;
-}
-
-.collection.active .container {
-    padding-bottom: 50vh;
+    transition: all 0.4s;
 }
 
 .collection .collection-art {
     padding: 0;
+    height: 200px;
+    overflow: hidden;
 }
 
 .img-slice-container {
@@ -93,17 +91,16 @@ body {
     background: #2C3E50;
     border: 3px solid #2C3E50;
     margin: 0 auto;
-    transition: all 0.4s;
     -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+.collection.active .img-slice-container {
+    height:400px;
 }
 
 .collection:hover .img-slice-container {
     opacity: 0.8;
-}
-
-.img-slice-container .diagonal {
-    height: 100%;
-    overflow: hidden;
 }
 
 .img-slice-container .collection-art-inner {
@@ -113,10 +110,33 @@ body {
     right: 50%;
 }
 
-.img-slice-container .diagonal img {
+.img-slice-container .collection-art img {
     height: 100%;
     position: relative;
     right: -50%;
+}
+
+.collection-count {
+    position: absolute;
+    right: 18px;
+    top: 160px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    background: rgba(44, 62, 80, 0.8);
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+.collection-art-right .collection-count {
+    left: 18px;
+}
+
+.collection.active .collection-count {
+    opacity: 0
 }
 
 .collection-expand {
@@ -136,8 +156,8 @@ body {
     height: 0.2em;
     width: 5em;
     opacity: 0;
-    transition: all 0.4s;
     -webkit-transition: all 0.4s;
+    transition: all 0.4s;
 }
 
 .collection:hover .icon-chevron {

@@ -1,22 +1,29 @@
 <div class="row collection" ng-repeat="collection in collections" ng-click="toggleCollection(collection.id)" ng-class="{'active': activeCollection == collection.id}">
 	<div class="container">
-		<div class="col-sm-8" ng-class-even="'collection-art-right'">
-			<div class="row img-slice-container">
-				<div ng-repeat="art in collection.art" class="col-xs-6 col-sm-4 collection-art diagonal">
-				<div class="collection-art-inner">
-						<img class="" ng-src="{{art.url}}">
+		<div class="row">
+			<div class="col-sm-8" ng-class-even="'collection-art-right'">
+				<div class="row img-slice-container">
+					<div ng-repeat="art in collection.art" class="col-xs-6 col-sm-4 collection-art">
+						<div class="collection-art-inner">
+							<img class="" ng-src="{{art.url}}">
+						</div>
 					</div>
 				</div>
+				<span class="collection-count">+{{collection.art.length - 3}}</span>
 			</div>
-		</div>
-		<div class="col-sm-4">
-			<div class="collection-info">
-				<h1>{{collection.name}}</h1>
-				<p>{{collection.description}}</p>
+			<div class="col-sm-4">
+				<div class="collection-info">
+					<h1>{{collection.name}}</h1>
+					<p>{{collection.description}}</p>
+				</div>
+
+				<div class="featured-artists">
+					<div></div>
+				</div>
 			</div>
-		</div>
-		<div class="collection-expand">
-			<span class="icon-chevron"></span>
+			<div class="collection-expand">
+				<span class="icon-chevron"></span>
+			</div>
 		</div>
 	</div>
 </div>
