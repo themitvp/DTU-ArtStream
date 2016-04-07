@@ -70,6 +70,7 @@ body {
 }
 
 .collection .container {
+    position: relative;
     padding-top: 5em;
     padding-bottom: 5em;
     transition: all 0.4s;
@@ -78,10 +79,6 @@ body {
 
 .collection.active .container {
     padding-bottom: 50vh;
-}
-
-.collection h1 {
-    margin-top: 0;
 }
 
 .collection .collection-art {
@@ -94,8 +91,14 @@ body {
     overflow: hidden;
     position: relative;
     background: #2C3E50;
-    border: 4px solid #2C3E50;
+    border: 3px solid #2C3E50;
     margin: 0 auto;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+}
+
+.collection:hover .img-slice-container {
+    opacity: 0.8;
 }
 
 .img-slice-container .diagonal {
@@ -116,11 +119,81 @@ body {
     right: -50%;
 }
 
+.collection-expand {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 3em;
+}
 
-/* Clouds */
+.icon-chevron {
+    position: relative;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 0;
+    height: 0.2em;
+    width: 5em;
+    opacity: 0;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+}
+
+.collection:hover .icon-chevron {
+    opacity: 0.8;
+    margin-top: 0.5em;
+}
+
+.icon-chevron:before, .icon-chevron:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    background: #2C3E50;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+}
+
+.icon-chevron:before {
+    left: 0;
+    -webkit-transform: skew(0deg, 10deg);
+    -moz-transform: skew(0deg, 10deg);
+    -ms-transform: skew(0deg, 10deg);
+    -o-transform: skew(0deg, 10deg);
+    transform: skew(0deg, 10deg);
+}
+
+.icon-chevron:after {
+    right: 0;
+    -webkit-transform: skew(0deg, -10deg);
+    -moz-transform: skew(0deg, -10deg);
+    -ms-transform: skew(0deg, -10deg);
+    -o-transform: skew(0deg, -10deg);
+    transform: skew(0deg, -10deg);
+}
+
+.collection.active .icon-chevron:before {
+    -webkit-transform: skew(0deg, -10deg);
+    -moz-transform: skew(0deg, -10deg);
+    -ms-transform: skew(0deg, -10deg);
+    -o-transform: skew(0deg, -10deg);
+    transform: skew(0deg, -10deg);
+}
+
+.collection.active .icon-chevron:after {
+    -webkit-transform: skew(0deg, 10deg);
+    -moz-transform: skew(0deg, 10deg);
+    -ms-transform: skew(0deg, 10deg);
+    -o-transform: skew(0deg, 10deg);
+    transform: skew(0deg, 10deg);
+}
+
 #clouds {
     display: block;
 }
+
 #clouds path {
     fill: #ecf0f1;
     stroke: #ecf0f1;
@@ -129,6 +202,7 @@ body {
 .clouds {
     background: #ecf0f1;
 }
+
 .clouds h3 {
     margin: 0;
     padding: 1em 0 2em;
