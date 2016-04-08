@@ -1,17 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="setup" ng-controller="mainController">
+<html lang="en" ng-app="setupApp" ng-controller="mainController">
 <head>
   <meta charset="UTF-8">
   <style type="text/css"></style>
 </head>
 <body>
+  <script src="js/angular.min.js"></script>
   <script src="js/socket.io.js"></script>
   <script type="text/javascript">
-    
-    var socket = io.connect('http://localhost:3000');
-    socket.emit('setup', {});
+    angular.module('setupApp', []).controller('mainController', function ($scope) {
+      var socket = io.connect(':3000');
+      socket.on('setupStatus', function (success) {
+        $scope.$apply(function () {
+          $scope.error = !success;
+        });
+      });
+
+      $scope.data = {};
+      $scope.save = function () {
+        socket.emit('setupSave', $scope.data);
+      };
+
+      socket.emit('setupEnter');
+    });
   </script>
 
-  <input type="text" >
+  <form ng-submit="save()">
+    <input type="text" required ng-model="data.pin" placeholder="PIN code"><br>
+    <input type="text" required ng-model="data.name" placeholder="Name"><br>
+    <input type="text" required ng-model="data.location" placeholder="Location"><br>
+    <button type="submit">Save</button>
+  </form>
+  <span ng-show="error">An error occurred, please check your PIN!</span>
 </body>
 </html>
