@@ -34,7 +34,12 @@
 							</div>
 							<div class="art-tree-column">
 								{{displaygroup.name}}
-								<span class="label text-primary">{{displaygroup.location}}</span>
+								<span class="label label-count">
+									<span>Displays: </span>
+									<span>
+										{{displaygroup.subdisplays.length}}
+									</span>
+								</span>
 							</div>
 							<div class="art-tree-column pull-right">
 								<a class="btn text-danger btn-xs" data-nodrag ng-click="remove(this)">

@@ -49,6 +49,10 @@ body {
     border-radius: 0;
 }
 
+.art-tree-column .label-count {
+    background: #59718A;
+}
+
 .art-tree-column:first-child {
     border-right: 1px solid #dae2ea;
     max-width: 50px;
