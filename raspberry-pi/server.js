@@ -29,7 +29,7 @@ io.on('connection', function (socket) {
   });
 });
 
-chokidar.watch('/Volumes', {
+chokidar.watch('/media/pi', {
   depth: 1,
   ignoreInitial: true
 }).on('addDir', function (event, path) {
