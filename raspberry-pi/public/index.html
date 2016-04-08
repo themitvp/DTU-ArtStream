@@ -75,16 +75,34 @@
 			</table>
 		</div>
 	</div>
+
+  <div ng-if="showSetup" class="menu">
+    <div class="menu-inner">
+      <h1>Hello!</h1>
+      <p>I'm a new screen.</p>
+      <p>Please go to the following URL on your phone to set me up:</p>
+      <p>
+        <strong>{{url}}</strong>
+      </p>
+      <p ng-show="pin">Please enter the following PIN: {{pin}}</p>
+    </div>
+  </div>
 	
 	<script src="js/socket.io.js"></script>
 	<script type="text/javascript">
 		var app = angular.module('raspberryPiApp', ['ngAnimate']);
 
 		app.controller('mainController', function ($scope, $interval) {
+      var loc = window.location;
+      $scope.name = null;
+      $scope.location = null;
 			$scope.selectImage = 0;
 			$scope.focusIndexX = 0;
 			$scope.focusIndexY = 0;
 			$scope.showMenu = false;
+      $scope.showSetup = true;
+      $scope.url = null;
+      $scope.pin = null;
 
 			$scope.images = [];
 			for (var i=1; i <= 12; i++) {
@@ -149,6 +167,25 @@
 				console.log('opening : ', record );
 			};
 
+      var socket = io.connect(':3000');
+      socket.on('setupEnter', function (pin) {
+        $scope.$apply(function () {
+          $scope.pin = pin;
+        });
+      });
+      socket.on('setupSave', function (data) {
+        $scope.$apply(function () {
+          $scope.name = data.name;
+          $scope.location = data.location;
+          $scope.showSetup = false;
+        });
+      });
+      socket.on('setupUrl', function (url) {
+        $scope.$apply(function () {
+          $scope.url = url;
+        });
+      })
+      socket.emit('setupUrl');
 		});
 	</script>
 </body>

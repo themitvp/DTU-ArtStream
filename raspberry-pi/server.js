@@ -3,17 +3,24 @@ var express = require('express')
   , server = require('http').Server(app)
   , io = require('socket.io')(server)
   , chokidar = require('chokidar')
+  , ip = require('ip')
   , currentPin;
 
 app.use(express.static('public'));
+app.all('/setup', function (req, res) {
+  res.redirect('/setup.html');
+});
 server.listen(3000);
 
 io.on('connection', function (socket) {
   socket.on('setupEnter', function () {
     currentPin = makePin();
     socket.broadcast.emit('setupEnter', currentPin);
+    console.log('setupEnter', currentPin);
   });
   socket.on('setupSave', function (data) {
+    console.log('setupSave', data);
+
     if (!data) return;
 
     var match = data.pin === currentPin;
@@ -24,8 +31,13 @@ io.on('connection', function (socket) {
     
     socket.emit('setupStatus', match);
   });
+  socket.on('setupUrl', function () {
+    socket.emit('setupUrl', 'http://'+ip.address()+':3000/setup');
+    console.log('setupUrl');
+  });
   socket.on('disconnect', function () {
     io.emit('setupExit');
+    console.log('setupExit')
   });
 });
 
