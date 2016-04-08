@@ -14,11 +14,15 @@
 			display: table-cell;
 			vertical-align: middle;
 			background: #000;
+			overflow: hidden;
 		}
 
 		.fullscreen {
 			margin: auto;
 			display: block;
+			max-height: 100%;
+			max-width: 100%;
+			height: auto;
 		}
 
 		.menu {
@@ -30,8 +34,8 @@
 			background: rgba(255, 255, 255, 0.95);
 			border: 2px solid #2F2F2F;
 			border-radius: 5px;
-			-webkit-transition: all 0.4s;
-			transition: all 0.4s;
+			-webkit-transition: all 1s;
+			transition: all 1s;
 		}
 
 		.menu.ng-enter,
@@ -50,12 +54,15 @@
 	</style>
 </head>
 <body class="ng-cloak" ng-keydown="openMenu($event)">
-	<img class="fullscreen" ng-src="{{images[selectImage]}}" onload="adjustImg()">
+	<img class="fullscreen" ng-src="{{images[selectImage]}}">
 	
 	<div ng-if="showMenu" class="menu">
 		<div class="menu-inner">
 			<h1>Menu</h1>
 			<p>Dismiss Timer: {{countDown}}s</p>
+			<li ng-repeat="image in images">
+				<div>{{$index}}</div>
+			</li>
 		</div>
 	</div>
 
@@ -95,17 +102,19 @@
 					
 					var startTime = Date.now();
 					$scope.countDown = 4;
+					var promise;
 
 					var tick = function() {
 						$scope.countDown -= 1;
 						$scope.clock = Date.now();
 						if ($scope.clock > startTime + 3000 ) {
 							$scope.showMenu = false;
+							$interval.cancel(promise);
 						}
 					}
 
 					tick();
-					$interval(tick, 1000);
+					promise = $interval(tick, 1000);
 				}
 			};
 
@@ -129,19 +138,6 @@
       })
       socket.emit('setupUrl');
 		});
-
-		function adjustImg() {
-			var height = $('.fullscreen').height();
-			var width = $('.fullscreen').width();
-
-			if (height >= width) {
-				$('.fullscreen').css("max-height", "100%");
-			}			
-			else {
-				$('.fullscreen').css("max-width", "100%");
-				$('.fullscreen').css("height", "auto");
-			}
-		};
 	</script>
 </body>
 </html>
