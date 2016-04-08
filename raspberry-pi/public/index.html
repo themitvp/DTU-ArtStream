@@ -3,13 +3,44 @@
 <head>
 	<meta charset="UTF-8">
 	<style type="text/css">
-	
+	html, body {
+		margin: 0;
+		width: 100vw;
+		height: 100vh;
+	}
 	</style>
 </head>
 <body>
+	<img class="fullscreen" ng-src="{{images[10]}}" onload="adjustImg()">
 	
+
+	
+	<script src="js/jquery-1.12.3.min.js"></script>
+	<script src="js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/socket.io.js"></script>
 	<script type="text/javascript">
-		
+		var app = angular.module('raspberryPiApp', []);
+
+		app.controller('mainController', function ($scope) {
+			$scope.images = [];
+			for (var i=1; i <= 11; i++) {
+				$scope.images.push("img/img" + i + ".jpeg");
+			};
+		});
+
+		function adjustImg() {
+			var height = $('.fullscreen').height();
+			var width = $('.fullscreen').width();
+
+			if (height >= width) {
+				$('.fullscreen').css("max-height", "100%");
+			}			
+			else {
+				$('.fullscreen').css("max-width", "100%");
+				$('.fullscreen').css("height", "auto");
+			}
+		};
 	</script>
 </body>
 </html>
