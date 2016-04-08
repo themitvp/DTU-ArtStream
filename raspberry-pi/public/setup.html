@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="setup" ng-controller="mainController">
+<head>
+  <meta charset="UTF-8">
+  <style type="text/css"></style>
+</head>
+<body>
+  <script src="js/socket.io.js"></script>
+  <script type="text/javascript">
+    
+    var socket = io.connect('http://localhost:3000');
+    socket.emit('setup', {});
+  </script>
+
+  <input type="text" >
+</body>
+</html>
