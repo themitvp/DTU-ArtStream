@@ -16,8 +16,11 @@ io.on('connection', function (socket) {
   socket.on('setupEnter', function () {
     currentPin = makePin();
     socket.broadcast.emit('setupEnter', currentPin);
+    console.log('setupEnter', currentPin);
   });
   socket.on('setupSave', function (data) {
+    console.log('setupSave', data);
+
     if (!data) return;
 
     var match = data.pin === currentPin;
@@ -30,9 +33,11 @@ io.on('connection', function (socket) {
   });
   socket.on('setupUrl', function () {
     socket.emit('setupUrl', 'http://'+ip.address()+':3000/setup');
+    console.log('setupUrl');
   });
   socket.on('disconnect', function () {
     io.emit('setupExit');
+    console.log('setupExit')
   });
 });
 

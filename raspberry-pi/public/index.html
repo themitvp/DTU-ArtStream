@@ -74,6 +74,7 @@
       <p>
         <strong>{{url}}</strong>
       </p>
+      <p ng-show="pin">Please enter the following PIN: {{pin}}</p>
     </div>
   </div>
 	
@@ -90,6 +91,7 @@
 			$scope.showMenu = false;
       $scope.showSetup = true;
       $scope.url = null;
+      $scope.pin = null;
 
 			$scope.images = [];
 			for (var i=1; i <= 11; i++) {
@@ -124,6 +126,11 @@
 			};
 
       var socket = io.connect(':3000');
+      socket.on('setupEnter', function (pin) {
+        $scope.$apply(function () {
+          $scope.pin = pin;
+        });
+      });
       socket.on('setupSave', function (data) {
         $scope.$apply(function () {
           $scope.name = data.name;
