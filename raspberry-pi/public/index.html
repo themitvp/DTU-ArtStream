@@ -2,6 +2,10 @@
 <html lang="en" ng-app="raspberryPiApp" ng-controller="mainController">
 <head>
 	<meta charset="UTF-8">
+	<script src="js/jquery-1.12.3.min.js"></script>
+	<script src="js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/angular-animate.min.js"></script>
 	<style type="text/css">
 		html, body {
 			margin: 0;
@@ -16,27 +20,84 @@
 			margin: auto;
 			display: block;
 		}
+
+		.menu {
+			position: absolute;
+			top: 10vh;
+			left: 10vw;
+			width: 80vw;
+			height: 80vh;
+			background: rgba(255, 255, 255, 0.95);
+			border: 2px solid #2F2F2F;
+			border-radius: 5px;
+			-webkit-transition: all 0.4s;
+			transition: all 0.4s;
+		}
+
+		.menu.ng-enter,
+		.menu.ng-leave.ng-leave-active {
+			opacity:0;
+		}
+
+		.menu.ng-leave,
+		.menu.ng-enter.ng-enter-active {
+			opacity:1;
+		}
+
+		.menu .menu-inner {
+			padding: 0 30px;
+		}
 	</style>
 </head>
-<body>
+<body class="ng-cloak" ng-keydown="openMenu($event)">
 	<img class="fullscreen" ng-src="{{images[selectImage]}}" onload="adjustImg()">
 	
-
+	<div ng-if="showMenu" class="menu">
+		<div class="menu-inner">
+			<h1>Menu</h1>
+			<p>Dismiss Timer: {{countDown}}s</p>
+		</div>
+	</div>
 	
-	<script src="js/jquery-1.12.3.min.js"></script>
-	<script src="js/jquery-migrate-1.2.1.min.js"></script>
-	<script src="js/angular.min.js"></script>
 	<script src="js/socket.io.js"></script>
 	<script type="text/javascript">
-		var app = angular.module('raspberryPiApp', []);
+		var app = angular.module('raspberryPiApp', ['ngAnimate']);
 
-		app.controller('mainController', function ($scope) {
+		app.controller('mainController', function ($scope, $interval) {
+			$scope.selectImage = 0;
+			$scope.focusIndex = 0;
+			$scope.showMenu = false;
+
 			$scope.images = [];
 			for (var i=1; i <= 11; i++) {
 				$scope.images.push("img/img" + i + ".jpeg");
 			};
 
-			$scope.selectImage = 0;
+			$scope.openMenu = function(event) {
+				if (event.keyCode == '37' || event.keyCode == '38' || event.keyCode == '39' || event.keyCode == '40') {
+					$scope.showMenu = true;
+					
+					var startTime = Date.now();
+					$scope.countDown = 4;
+
+					var tick = function() {
+						$scope.countDown -= 1;
+						$scope.clock = Date.now();
+						if ($scope.clock > startTime + 3000 ) {
+							$scope.showMenu = false;
+						}
+					}
+
+					tick();
+					$interval(tick, 1000);
+				}
+			};
+
+			$scope.open = function ( index ) {
+				var record = $scope.shownRecords[ index ]
+				console.log('opening : ', record );
+			};
+
 		});
 
 		function adjustImg() {
