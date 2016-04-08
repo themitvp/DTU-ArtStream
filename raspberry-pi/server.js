@@ -3,9 +3,13 @@ var express = require('express')
   , server = require('http').Server(app)
   , io = require('socket.io')(server)
   , chokidar = require('chokidar')
+  , ip = require('ip')
   , currentPin;
 
 app.use(express.static('public'));
+app.all('/setup', function (req, res) {
+  res.redirect('/setup.html');
+});
 server.listen(3000);
 
 io.on('connection', function (socket) {
@@ -23,6 +27,9 @@ io.on('connection', function (socket) {
     }
     
     socket.emit('setupStatus', match);
+  });
+  socket.on('setupUrl', function () {
+    socket.emit('setupUrl', 'http://'+ip.address()+':3000/setup');
   });
   socket.on('disconnect', function () {
     io.emit('setupExit');

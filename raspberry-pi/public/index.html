@@ -58,15 +58,31 @@
 			<p>Dismiss Timer: {{countDown}}s</p>
 		</div>
 	</div>
+
+  <div ng-if="showSetup" class="menu">
+    <div class="menu-inner">
+      <h1>Hello!</h1>
+      <p>I'm a new screen.</p>
+      <p>Please go to the following URL on your phone to set me up:</p>
+      <p>
+        <strong>{{url}}</strong>
+      </p>
+    </div>
+  </div>
 	
 	<script src="js/socket.io.js"></script>
 	<script type="text/javascript">
 		var app = angular.module('raspberryPiApp', ['ngAnimate']);
 
 		app.controller('mainController', function ($scope, $interval) {
+      var loc = window.location;
+      $scope.name = null;
+      $scope.location = null;
 			$scope.selectImage = 0;
 			$scope.focusIndex = 0;
 			$scope.showMenu = false;
+      $scope.showSetup = true;
+      $scope.url = null;
 
 			$scope.images = [];
 			for (var i=1; i <= 11; i++) {
@@ -98,6 +114,20 @@
 				console.log('opening : ', record );
 			};
 
+      var socket = io.connect(':3000');
+      socket.on('setupSave', function (data) {
+        $scope.$apply(function () {
+          $scope.name = data.name;
+          $scope.location = data.location;
+          $scope.showSetup = false;
+        });
+      });
+      socket.on('setupUrl', function (url) {
+        $scope.$apply(function () {
+          $scope.url = url;
+        });
+      })
+      socket.emit('setupUrl');
 		});
 
 		function adjustImg() {
