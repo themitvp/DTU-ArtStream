@@ -34,8 +34,6 @@
 			background: rgba(255, 255, 255, 0.95);
 			border: 2px solid #2F2F2F;
 			border-radius: 5px;
-			-webkit-transition: all 1s;
-			transition: all 1s;
 		}
 
 		.menu.ng-enter,
@@ -51,6 +49,14 @@
 		.menu .menu-inner {
 			padding: 0 30px;
 		}
+
+		.highlight {
+			background: #dedede;
+		}
+
+		table img {
+			width: 100%;
+		}
 	</style>
 </head>
 <body class="ng-cloak" ng-keydown="openMenu($event)">
@@ -59,64 +65,100 @@
 	<div ng-if="showMenu" class="menu">
 		<div class="menu-inner">
 			<h1>Menu</h1>
-			<p>Dismiss Timer: {{countDown}}s</p>
-			<li ng-repeat="image in images">
-				<div>{{$index}}</div>
-			</li>
+			<!--<p>Dismiss Timer: {{countDown}}s</p>-->
+			<table>
+				<tr ng-repeat="row in imageGrid" ng-init="indexY = $index">
+					<td ng-repeat="item in row" ng-init="indexX = $index" ng-class="{'highlight': indexX == focusIndexX && indexY == focusIndexY }">
+						<img ng-src="{{item}}">
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 
-  <div ng-if="showSetup" class="menu">
-    <div class="menu-inner">
-      <h1>Hello!</h1>
-      <p>I'm a new screen.</p>
-      <p>Please go to the following URL on your phone to set me up:</p>
-      <p>
-        <strong>{{url}}</strong>
-      </p>
-      <p ng-show="pin">Please enter the following PIN: {{pin}}</p>
-    </div>
-  </div>
+	<div ng-if="showSetup" class="menu">
+		<div class="menu-inner">
+			<h1>Hello!</h1>
+			<p>I'm a new screen.</p>
+			<p>Please go to the following URL on your phone to set me up:</p>
+			<p>
+				<strong>{{url}}</strong>
+			</p>
+			<p ng-show="pin">Please enter the following PIN: {{pin}}</p>
+		</div>
+	</div>
 	
 	<script src="js/socket.io.js"></script>
 	<script type="text/javascript">
 		var app = angular.module('raspberryPiApp', ['ngAnimate']);
 
 		app.controller('mainController', function ($scope, $interval) {
-      var loc = window.location;
-      $scope.name = null;
-      $scope.location = null;
+			var loc = window.location;
+			$scope.name = null;
+			$scope.location = null;
 			$scope.selectImage = 0;
-			$scope.focusIndex = 0;
+			$scope.focusIndexX = 0;
+			$scope.focusIndexY = 0;
 			$scope.showMenu = false;
-      $scope.showSetup = true;
-      $scope.url = null;
-      $scope.pin = null;
+			$scope.showSetup = true;
+			$scope.url = null;
+			$scope.pin = null;
 
 			$scope.images = [];
-			for (var i=1; i <= 11; i++) {
+			for (var i=1; i <= 12; i++) {
 				$scope.images.push("img/img" + i + ".jpeg");
 			};
 
-			$scope.openMenu = function(event) {
-				if (event.keyCode == '37' || event.keyCode == '38' || event.keyCode == '39' || event.keyCode == '40') {
-					$scope.showMenu = true;
-					
-					var startTime = Date.now();
-					$scope.countDown = 4;
-					var promise;
+			$scope.imageGrid = [];
 
-					var tick = function() {
-						$scope.countDown -= 1;
-						$scope.clock = Date.now();
-						if ($scope.clock > startTime + 3000 ) {
+			for (var i=0; i < $scope.images.length; i++) {
+				if (i%4 == 0) {
+					$scope.imageGrid.push([]);
+				}
+				$scope.imageGrid[$scope.imageGrid.length-1].push($scope.images[i]);
+			}
+			console.log($scope.imageGrid);
+
+			$scope.openMenu = function(event) {
+				if (event.keyCode == '37' || event.keyCode == '38' || event.keyCode == '39' || event.keyCode == '40' || event.keyCode == '13') {
+
+					if ($scope.showMenu == false) {
+						$scope.showMenu = true;
+
+						var startTime = Date.now();
+						$scope.countDown = 4;
+						var promise;
+
+						var tick = function() {
+							$scope.countDown -= 1;
+							$scope.clock = Date.now();
+							if ($scope.clock > startTime + 3000 ) {
+								$scope.showMenu = false;
+								$interval.cancel(promise);
+							}
+						}
+
+						tick();
+						//promise = $interval(tick, 1000);
+					} else {
+						// LEFT
+						if (event.keyCode == '37' && $scope.focusIndexX != 0) { $scope.focusIndexX--; }
+						
+						// RIGHT
+						if (event.keyCode == '39' && $scope.focusIndexX != 3) { $scope.focusIndexX++; }
+
+						// UP
+						if (event.keyCode == '38' && $scope.focusIndexY != 0) { $scope.focusIndexY--; }
+
+						// DOWN
+						if (event.keyCode == '40' && $scope.focusIndexY != 2) { $scope.focusIndexY++; }
+
+						// ENTER
+						if (event.keyCode == '13') { 
+							$scope.selectImage = 4 * $scope.focusIndexY + $scope.focusIndexX; 
 							$scope.showMenu = false;
-							$interval.cancel(promise);
 						}
 					}
-
-					tick();
-					promise = $interval(tick, 1000);
 				}
 			};
 
