@@ -9,7 +9,7 @@
   <script src="js/socket.io.js"></script>
   <script type="text/javascript">
     angular.module('setupApp', []).controller('mainController', function ($scope) {
-      var socket = io.connect(':3000');
+      var socket = io.connect();
       socket.on('setupStatus', function (success) {
         $scope.$apply(function () {
           $scope.error = !success;
