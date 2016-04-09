@@ -125,7 +125,7 @@
 				console.log('opening : ', record );
 			};
 
-      var socket = io.connect(':3000');
+      var socket = io.connect();
       socket.on('setupEnter', function (pin) {
         $scope.$apply(function () {
           $scope.pin = pin;

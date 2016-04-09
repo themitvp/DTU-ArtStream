@@ -10,7 +10,7 @@ app.use(express.static('public'));
 app.all('/setup', function (req, res) {
   res.redirect('/setup.html');
 });
-server.listen(3000);
+server.listen(80);
 
 io.on('connection', function (socket) {
   socket.on('setupEnter', function () {
@@ -32,7 +32,7 @@ io.on('connection', function (socket) {
     socket.emit('setupStatus', match);
   });
   socket.on('setupUrl', function () {
-    socket.emit('setupUrl', 'http://'+ip.address()+':3000/setup');
+    socket.emit('setupUrl', 'http://'+ip.address()+'/setup');
     console.log('setupUrl');
   });
   socket.on('disconnect', function () {
