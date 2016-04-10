@@ -7,6 +7,13 @@
 	<script src="js/angular.min.js"></script>
 	<script src="js/angular-animate.min.js"></script>
 	<style type="text/css">
+		html {
+			box-sizing: border-box;
+		}
+		*, *:before, *:after {
+			box-sizing: inherit;
+		}
+
 		html, body {
 			margin: 0;
 			width: 100vw;
@@ -34,6 +41,7 @@
 			background: rgba(255, 255, 255, 0.95);
 			border: 2px solid #2F2F2F;
 			border-radius: 5px;
+			overflow: auto;
 		}
 
 		.menu.ng-enter,
@@ -48,14 +56,38 @@
 
 		.menu .menu-inner {
 			padding: 0 30px;
+			height: 100%;
+		}
+
+		.menu .menu-inner h1 {
+			margin: 0;
+			padding: 10px 0;
+		}
+
+		.menu table {
+			width: 100%;
+		}
+
+		.art-item {
+			height: 20vh;
+			width: 25%;
+			display: table-cell;
+			vertical-align: middle;
+			border: 1px solid transparent;
+			padding: 5px;
+		}
+
+		.art-item img {
+			max-width: 100%;
+			max-height: 100%;
+			height: auto;
+			margin: 0 auto;
+			display: block;
 		}
 
 		.highlight {
 			background: #dedede;
-		}
-
-		table img {
-			width: 100%;
+			border-color: #A0A0A0;
 		}
 	</style>
 </head>
@@ -66,9 +98,10 @@
 		<div class="menu-inner">
 			<h1>Menu</h1>
 			<!--<p>Dismiss Timer: {{countDown}}s</p>-->
+			
 			<table>
 				<tr ng-repeat="row in imageGrid" ng-init="indexY = $index">
-					<td ng-repeat="item in row" ng-init="indexX = $index" ng-class="{'highlight': indexX == focusIndexX && indexY == focusIndexY }">
+					<td class="art-item" ng-repeat="item in row" ng-init="indexX = $index" ng-class="{'highlight': indexX == focusIndexX && indexY == focusIndexY }">
 						<img ng-src="{{item}}">
 					</td>
 				</tr>
@@ -167,25 +200,25 @@
 				console.log('opening : ', record );
 			};
 
-      var socket = io.connect();
-      socket.on('setupEnter', function (pin) {
-        $scope.$apply(function () {
-          $scope.pin = pin;
-        });
-      });
-      socket.on('setupSave', function (data) {
-        $scope.$apply(function () {
-          $scope.name = data.name;
-          $scope.location = data.location;
-          $scope.showSetup = false;
-        });
-      });
-      socket.on('setupUrl', function (url) {
-        $scope.$apply(function () {
-          $scope.url = url;
-        });
-      })
-      socket.emit('setupUrl');
+			var socket = io.connect();
+			socket.on('setupEnter', function (pin) {
+				$scope.$apply(function () {
+					$scope.pin = pin;
+				});
+			});
+			socket.on('setupSave', function (data) {
+				$scope.$apply(function () {
+					$scope.name = data.name;
+					$scope.location = data.location;
+					$scope.showSetup = false;
+				});
+			});
+			socket.on('setupUrl', function (url) {
+				$scope.$apply(function () {
+					$scope.url = url;
+				});
+			})
+			socket.emit('setupUrl');
 		});
 	</script>
 </body>
