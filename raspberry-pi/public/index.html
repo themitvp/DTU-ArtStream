@@ -113,10 +113,10 @@
 		<div class="menu-inner">
 			<h1>Hello!</h1>
 			<p>I'm a new screen.</p>
-			<p>Please go to the following URL on your phone to set me up:</p>
-			<p>
-				<strong>{{url}}</strong>
-			</p>
+			<p>Please go to the following URL on any device to set me up:</p>
+			<h1><strong>{{url}}</strong></h1>
+			
+			<h1 ng-show="pin"><strong>You are now connected!</strong></h1>
 			<h1 ng-show="pin"><strong>Please enter the following PIN: {{pin}}</strong></h1>
 		</div>
 	</div>
