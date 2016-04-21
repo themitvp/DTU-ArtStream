@@ -2,6 +2,9 @@
 <html lang="en" ng-app="setupApp" ng-controller="mainController">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <style type="text/css"></style>
 </head>
 <body>
@@ -24,13 +27,21 @@
       socket.emit('setupEnter');
     });
   </script>
-
-  <form ng-submit="save()">
-    <input type="text" required ng-model="data.pin" placeholder="PIN code"><br>
-    <input type="text" required ng-model="data.name" placeholder="Name"><br>
-    <input type="text" required ng-model="data.location" placeholder="Location"><br>
-    <button type="submit">Save</button>
-  </form>
-  <span ng-show="error">An error occurred, please check your PIN!</span>
+  <div class="container-fluid">
+    <h2>Connected to Screen</h2>
+    <form ng-submit="save()">
+      <div class="form-group">
+        <input type="text" class="form-control" required ng-model="data.pin" placeholder="PIN code">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" required ng-model="data.name" placeholder="Name">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" required ng-model="data.location" placeholder="Location">
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>
+    </form>
+    <span ng-show="error">An error occurred, please check your PIN!</span>
+  </div>
 </body>
 </html>
