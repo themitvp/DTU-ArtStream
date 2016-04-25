@@ -58,7 +58,7 @@
 			padding: 0 30px;
 			height: 100%;
 			width: 100%;
-			display: table;
+			display: block;
 		}
 
 		.menu .menu-inner h1 {
@@ -72,16 +72,17 @@
 			text-align: center;
 		}
 
-		.menu table {
+		.menu table, .menu table tbody, .menu table tr {
+			display: block;
 			width: 100%;
 		}
 
 		.art-item {
-			
 			width: 25%;
 			vertical-align: middle;
 			border: 1px solid transparent;
 			padding: 25px;
+			display: inline-block;
 		}
 
 		.art-item img {
