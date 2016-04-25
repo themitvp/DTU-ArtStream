@@ -77,10 +77,16 @@
 			padding: 10px 25px;
 		}
 
-		.menu .menu-inner .dead-center {
+		.menu .menu-inner .menu-center {
+			display: table;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+		}		
+
+		.menu .menu-inner .menu-center-center {
 			display: table-cell;
 			vertical-align: middle;
-			text-align: center;
 		}
 
 		.menu table {
@@ -144,23 +150,25 @@
 
 	<div ng-if="showSetup" class="menu">
 		<div class="menu-inner">
-			<div class="dead-center">
-				<div class="title">
-					<h1>Welcome to ArtStream</h1>
-					<h3>The Digital Art Experience</h3>
-				</div>
-				<div ng-hide="pin">
-					<h3>To get started please enter the following URL or scan the QR code on any device:</h3>
-					<!--<h1><strong>{{url}}</strong></h1>-->
-					<h2><strong>192.168.2.10/setup</strong></h2>
-					<qr text="url" size="120"></qr>
-				</div>
-				<div ng-show="pin">
-					<br/>
-					<?xml version="1.0" ?><svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none" opacity=".1"/><path d="M0 0h48v48h-48z" fill="none"/><path d="M2 36v6h6c0-3.31-2.69-6-6-6zm0-8v4c5.52 0 10 4.48 10 10h4c0-7.73-6.27-14-14-14zm36-14h-28v3.27c7.92 2.56 14.17 8.81 16.73 16.73h11.27v-20zm-36 6v4c9.94 0 18 8.06 18 18h4c0-12.15-9.85-22-22-22zm40-14h-36c-2.21 0-4 1.79-4 4v6h4v-6h36v28h-14v4h14c2.21 0 4-1.79 4-4v-28c0-2.21-1.79-4-4-4z"/></svg>
-					<h2><strong>You are now connected</strong></h2>
-					<h3><strong>Please enter the following PIN:</strong></h3>
-					<h1>{{pin}}</h1>
+			<div class="menu-center">
+				<div class="menu-center-center">
+					<div class="title">
+						<h1>Welcome to ArtStream</h1>
+						<h3>The Digital Art Experience</h3>
+					</div>
+					<div ng-hide="pin">
+						<h3>To get started please enter the following URL or scan the QR code on any device:</h3>
+						<!--<h1><strong>{{url}}</strong></h1>-->
+						<h2><strong>192.168.2.10/setup</strong></h2>
+						<qr text="url" size="120"></qr>
+					</div>
+					<div ng-show="pin">
+						<br/>
+						<?xml version="1.0" ?><svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none" opacity=".1"/><path d="M0 0h48v48h-48z" fill="none"/><path d="M2 36v6h6c0-3.31-2.69-6-6-6zm0-8v4c5.52 0 10 4.48 10 10h4c0-7.73-6.27-14-14-14zm36-14h-28v3.27c7.92 2.56 14.17 8.81 16.73 16.73h11.27v-20zm-36 6v4c9.94 0 18 8.06 18 18h4c0-12.15-9.85-22-22-22zm40-14h-36c-2.21 0-4 1.79-4 4v6h4v-6h36v28h-14v4h14c2.21 0 4-1.79 4-4v-28c0-2.21-1.79-4-4-4z"/></svg>
+						<h2><strong>You are now connected</strong></h2>
+						<h3><strong>Please enter the following PIN:</strong></h3>
+						<h1>{{pin}}</h1>
+					</div>
 				</div>
 			</div>
 		</div>
