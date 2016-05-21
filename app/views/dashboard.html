@@ -6,7 +6,7 @@
 			<div class="arrow"></div>
 		</div>
 		<div class="col-sm-6">
-			<h3>My Collections <a class="pull-right btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a></h3>
+			<h3>My Collections</h3>
 			<div data-ui-tree="treeOptions" data-clone-enabled="true" data-nodrop-enabled="true">
 				<ol ui-tree-nodes ng-model="collections">
 					<li ui-tree-node ng-repeat="collection in collections" >
@@ -31,7 +31,7 @@
 			</div>
 		</div>
 		<div class="col-sm-6">
-			<h3>Display Groups <a class="pull-right btn btn-success btn-xs" ng-click="newItem()" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a></h3>
+			<h3>Display Groups</h3>
 			<div ui-tree data-clone-enabled="true" class="drop-on-node" data-max-depth="1">
 				<ol ui-tree-nodes ng-model="displaygroups">
 					<li ui-tree-node ng-repeat="displaygroup in displaygroups" ng-mouseenter="highlightCollection(displaygroup.collection)" ng-mouseleave="highlightCollection()">
