@@ -86,15 +86,15 @@ body {
 
 .art-tree-column {
     display: inline-block;
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
+    line-height: 50px;
     padding: 0 0 0 10px;
     flex-grow: 1;
 }
 
 .art-tree-column .label {
     float: right;
-    line-height: 37px;
+    line-height: 47px;
     width: 150px;
     text-align: left;
     height: 100%;
@@ -127,7 +127,7 @@ body {
     border: none;
     padding: 0;
     margin: 0;
-    line-height: 1.8;
+    line-height: 2.6;
     display: block;
     width: 100%;
     height: 100%;
@@ -138,6 +138,39 @@ body {
     background-color: #E74C3C;
 }
 
+.collection-active {
+    background: #59718A;
+    color: white;
+}
+
+.collection-active .glyphicon {
+    color: white;
+}
+
+.collection-label {
+    background: #394858;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.collection-label .glyphicon {
+    top: 2px;
+    left: 4px;
+}
+
+.collection-active:hover {
+    background: #7C94AD;
+    color: white;
+}
+
+.collection-active .art-tree-column .label-count {
+    background: #394858;
+}
+
+.angular-ui-tree .highlight {
+    background: #59718A;
+    color: white;
+}
 
 .angular-ui-tree-nodes .angular-ui-tree-nodes {
     padding-left: 50px;
@@ -150,6 +183,14 @@ body {
 .angular-ui-tree-placeholder {
     background: #f0f9ff;
     border: 2px dotted #bed2db;
+}
+
+.drop-on-node .angular-ui-tree-placeholder {
+    position: absolute;
+    width: 101%;
+    height: 57px;
+    margin-top: -2px;
+    margin-left: -2px;
 }
 
 .tree-node {
@@ -470,7 +511,7 @@ body {
     height: 100%;
     width: 100%;
     float: none;
-    line-height: 200px;
+    line-height: 189px;
     font-size: 35px;
     background-repeat: no-repeat;
     background-size: cover;
@@ -483,6 +524,17 @@ body {
     transition: all 0.4s;
 }
 
+.tree-art-image {
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    border-right: 1px solid #F8FAFF;
+}
+
+.tree-art-image:last-child {
+    border-right: none;
+}
 
 /* ANIMATIONS for left and right
 ============================================================================= */

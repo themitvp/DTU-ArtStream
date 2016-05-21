@@ -2,8 +2,10 @@ app.controller('searchController', function( $scope, $http, $location, $routeSeg
     $scope.Page = Page;
     $scope.$routeSegment = $routeSegment;
 
-    $scope.categories = 
-    [
+    $scope.clickCategory = function() {
+    }; 
+
+    $scope.categories = [
     	{
     		title: "Landscape",
     		url: "https://images.unsplash.com/photo-1444948349385-a7749b254e33?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=ea5ecccda26dd6ba058289b82876859f"

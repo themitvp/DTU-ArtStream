@@ -63,15 +63,15 @@ app.controller('exploreController', function( $scope, $http, $location, $routeSe
 		},
 		{
 			artist: "Susanne Feldt",
-			url: "https://images.unsplash.com/photo-1429979787503-f2d7d20550c8?crop=entropy&fit=crop&fm=jpg&h=1000&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1925"
+			url: "https://images.unsplash.com/photo-1463123081488-789f998ac9c4?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=6d1a6d1c5a7eb63d0c411b1d019f0b30"
 		},
 		{
 			artist: "John Doe",
-			url: "https://images.unsplash.com/photo-1443890923422-7819ed4101c0?crop=entropy&fit=crop&fm=jpg&h=1000&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1925"
+			url: "https://images.unsplash.com/photo-1416169607655-0c2b3ce2e1cc?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=63abc6240e85e1bfd1c45eb84ba717b8"
 		},
 		{
 			artist: "John Doe",
-			url: "https://images.unsplash.com/photo-1447958374760-1ce70cf11ee3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=ef0b679eb4f3886a72293bdada6098e1"
+			url: "https://images.unsplash.com/reserve/JjdWbOCTlemWMuvC0BeF_DSC_0867edit.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=93733799d489cf100ad9b13fa9a25fbf"
 		}
 		],
 		artists: [

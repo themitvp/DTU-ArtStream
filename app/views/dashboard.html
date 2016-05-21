@@ -1,1 +1,117 @@
-<h1>Dashboard</h1>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-8 col-md-offset-2 alert alert-drag alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<strong>Drag N' Drop</strong> the collections to display groups
+			<div class="arrow"></div>
+		</div>
+		<div class="col-sm-6">
+			<h3>My Collections <a class="pull-right btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a></h3>
+			<div data-ui-tree="treeOptions" data-clone-enabled="true" data-nodrop-enabled="true">
+				<ol ui-tree-nodes ng-model="collections">
+					<li ui-tree-node ng-repeat="collection in collections" >
+						<div ui-tree-handle ng-class="{'highlight': isHighlightedCollection(collection.name)}">
+							<div class="art-tree-column" style="max-width: 180px;flex-basis: 180px;">
+								<div class="col-sm-4 tree-art-image" ng-repeat="art in collection.art | limitTo : 3" style="background-image:url({{art.url}})">
+								</div>
+							</div>
+							<div class="art-tree-column">
+								{{collection.name}}
+								<span ng-show="collection.displaygroup != ''">&nbsp;&nbsp; | &nbsp;&nbsp;{{collection.displaygroup}}</span>
+								<span class="label text-primary">{{collection.location}}</span>
+							</div>
+							<div class="art-tree-column pull-right">
+								<a class="btn text-danger btn-xs" data-nodrag ng-click="remove(this)">
+									<span class="glyphicon glyphicon-remove"></span>
+								</a>
+							</div>
+						</div>
+					</li>
+				</ol>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<h3>Display Groups <a class="pull-right btn btn-success btn-xs" ng-click="newItem()" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a></h3>
+			<div ui-tree data-clone-enabled="true" class="drop-on-node" data-max-depth="1">
+				<ol ui-tree-nodes ng-model="displaygroups">
+					<li ui-tree-node ng-repeat="displaygroup in displaygroups" ng-mouseenter="highlightCollection(displaygroup.collection)" ng-mouseleave="highlightCollection()">
+						<div ui-tree-handle data-nodrag class="displaygroup" ng-click="toggle(this)" ng-class="{'collection-active' : displaygroup.collection != ''}">
+							<div class="art-tree-column">
+								<a class="btn-xs collapser" ng-if="displaygroup.subdisplays && displaygroup.subdisplays.length > 0">
+									<span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}"></span>
+								</a>
+							</div>
+							<div class="art-tree-column">
+								{{displaygroup.name}}
+								<span ng-show="displaygroup.collection != ''">&nbsp;&nbsp; | &nbsp;&nbsp;
+								<span ng-click="removeCollection(displaygroup, $event)" class="collection-label">{{displaygroup.collection}}
+								<span class="glyphicon glyphicon-remove"></span>
+								</span>
+								</span>
+
+								<span class="label label-count">
+									<span>Displays: </span>
+									<span>
+										{{displaygroup.subdisplays.length}}
+									</span>
+								</span>
+							</div>
+							<div class="art-tree-column pull-right">
+								<a class="btn text-danger btn-xs" data-nodrag ng-click="remove(this)">
+									<span class="glyphicon glyphicon-remove"></span>
+								</a>
+							</div>
+						</div>
+						<ol ui-tree-nodes="" ng-model="displaygroup.subdisplays" class="subdisplays" ng-class="{hidden: collapsed}">
+							<li ng-repeat="subDisplay in displaygroup.subdisplays" ui-tree-node>
+								<div ui-tree-handle>
+									<div class="art-tree-column">#{{subDisplay.id}}</div>
+									<div class="art-tree-column">
+										{{subDisplay.name}}
+										<span class="label text-primary">{{subDisplay.location}}</span>
+									</div>
+									<div class="art-tree-column pull-right">
+										<a class="btn text-danger btn-xs" data-nodrag ng-click="remove(this)">
+											<span class="glyphicon glyphicon-remove"></span>
+										</a>
+									</div>
+								</div>
+							</li>
+						</ol>
+					</li>
+				</ol>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<form name="newDisplayForm" ng-submit="newDisplay()">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Add Display</h4>
+						</div>
+						<div class="modal-body">
+							<p>Type in the name and location of the new display</p>
+
+							<div class="form-group">
+								<label for="name">Name</label>
+								<input type="text" class="form-control" ng-model="newDisplayName" id="name" placeholder="Etc. Patient Display, Kids Display..." required>
+							</div>
+							<div class="form-group">
+								<label for="location">Location</label>
+								<input type="text" class="form-control" id="location" ng-model="newDisplayLocation" placeholder="Etc. Room 222, Reception..." required>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-success">Create</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
