@@ -360,8 +360,8 @@ body {
 
 .collection-count {
     position: absolute;
-    right: 18px;
-    top: 157px;
+    right: 15px;
+    top: 161px;
     display: block;
     width: 40px;
     height: 40px;
@@ -374,7 +374,7 @@ body {
 }
 
 .collection-art-right .collection-count {
-    left: 18px;
+    left: 15px;
 }
 
 .collection.active .collection-count {
