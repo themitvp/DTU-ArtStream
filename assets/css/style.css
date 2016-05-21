@@ -6,7 +6,7 @@ html, body {
     height: 100%;
 }
 body {
-    padding-top: 60px;
+    padding-top: 90px;
     padding-bottom: 40px;
 }
 
@@ -449,6 +449,40 @@ body {
         text-align: right;
     }
 }
+
+#searchpage {
+    padding-top: 3em;
+}
+
+#search {
+    height: 60px;
+    font-size: 30px;
+}
+
+.category {
+    height: 200px;
+    text-align: center;
+}
+
+.category .category-link{
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+    float: none;
+    line-height: 200px;
+    font-size: 35px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    background-color: rgba(0, 0, 0, 0.25);
+    background-blend-mode: overlay;
+    font-weight: bold;
+    color: white;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
 
 /* ANIMATIONS for left and right
 ============================================================================= */
