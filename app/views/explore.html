@@ -3,10 +3,11 @@
 		<div class="row">
 			<div class="col-sm-8" ng-class-even="'collection-art-right'">
 				<div class="row img-slice-container">
-					<div ng-repeat="art in collection.art" class="col-xs-6 col-sm-4 collection-art">
+					<div ng-repeat="art in collection.art" class="col-xs-6 col-sm-4 collection-art" ng-mouseenter="highlightArtist(art.artist)" ng-mouseleave="highlightArtist()">
 						<div class="collection-art-inner">
 							<img class="" ng-src="{{art.url}}">
 						</div>
+						<span class="img-artist-title">{{art.artist}}</span>
 					</div>
 				</div>
 				<span class="collection-count">+{{collection.art.length - 3}}</span>
@@ -17,8 +18,18 @@
 					<p>{{collection.description}}</p>
 				</div>
 
-				<div class="featured-artists">
-					<div></div>
+				<button ng-click="addToCollection(collection, $event)" class="btn btn-primary btn-sm" ng-class="collection.selected ? 'artstream-btn-remove' : 'artstream-btn-primary'">{{collection.selected ? 'Remove From' : 'Add To'}} My Collection <span class="glyphicon" ng-class="collection.selected ? 'glyphicon-remove-circle' : 'glyphicon-ok-circle'"></span></button>
+
+				<div class="col-sm-12 featured-artists">
+					<div class="row">
+						<div class="col-sm-12">
+							<h2>Featured Artists</h2>
+						</div>
+						<div ng-repeat="artist in collection.artists" class="col-sm-4 artist" ng-class="{'highlight': isHighlightedArtist(artist.name)}">
+							<img src="assets/img/profiles/profile{{$index+1}}.jpg"></img>
+							<span>{{artist.name}}</span>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="collection-expand">
