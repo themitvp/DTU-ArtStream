@@ -1,91 +1,178 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="setupApp" ng-controller="mainController">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" href='css/flatly-bootstrap.min.css?1' type="text/css"/>
-  <style type="text/css">
-    body {
-      padding-top: 90px;
-      padding-bottom: 40px;
-    }
-    .navbar-brand {
-      padding: 0px;
-      height: 90px;
-    }
-    .navbar-brand>img {
-      height: 100%;
-      padding: 15px;
-      width: auto;
-    }
+   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+   <link rel="stylesheet" href='css/flatly-bootstrap.min.css?1' type="text/css"/>
+   <style type="text/css">
+      body {
+         padding-top: 110px;
+         padding-bottom: 40px;
+      }
 
-    input {
-      margin-bottom: 15px;
-    }
+      .navbar-brand {
+         padding: 0px;
+         height: 90px;
+      }
+
+      .navbar-brand>img {
+         height: 100%;
+         padding: 15px;
+         width: auto;
+      }
+
+      .navbar-text {
+         line-height: 50px;
+         margin-right: 30px;
+      }
+
+      input {
+         margin-bottom: 15px;
+      }
+
+      .menu table {
+         position: absolute;
+         left: 0;
+         right: 0;
+         top: 0;
+         margin-top: 80px;
+         height: 85%;
+         overflow: auto;
+      }
+
+      .menu table, .menu table tbody, .menu table tr {
+         display: block;
+         width: 100%;
+      }
+
+      .art-item {
+         width: 50%;
+         vertical-align: middle;
+         border: 5px solid transparent;
+         padding: 10px;
+         display: inline-block;
+      }
+
+      .art-item img {
+         max-width: 100%;
+         max-height: 100%;
+         height: auto;
+         margin: 0 auto;
+         display: block;
+      }
+
+      .btn {
+         margin-top: 25px;
+      }
+
+      .highlight {
+         border-color: #2C3E50;
+      }
   </style>
 </head>
 <body>
-  <script src="js/angular.min.js"></script>
-  <script src="js/socket.io.js"></script>
-  <script type="text/javascript">
-    var app = angular.module('setupApp', []).controller('mainController', function ($scope) {
-      var socket = io.connect();
-      socket.on('setupStatus', function (success) {
-        $scope.$apply(function () {
-          $scope.error = !success;
-        });
-      });
+   <script src="js/angular.min.js"></script>
+   <script src="js/socket.io.js"></script>
+   <script type="text/javascript">
+      var app = angular.module('setupApp', []).controller('mainController', function ($scope) {
+         var socket = io.connect();
+         socket.on('setupStatus', function (success) {
+            $scope.$apply(function () {
+               $scope.error = !success;
+            });
+         });
 
-      $scope.data = {};
-      
-      $scope.save = function () {
-        socket.emit('setupSave', $scope.data);
-      };
+         $scope.showSetup = false;
+         $scope.selectImage = 0;
+         $scope.focusIndexX = 0;
+         $scope.focusIndexY = 0;
+         $scope.data = {};
 
-      socket.emit('setupEnter');
-    });
-    app.directive("moveNextOnMaxlength", function() {
-      return {
-        restrict: "A",
-        link: function($scope, element) {
-          element.on("input", function(e) {
-            if(element.val().length == element.attr("maxlength")) {
-              var $nextElement = element.next();
-              if($nextElement.length) {
-                $nextElement[0].focus();
-              }
+         $scope.thumbnails = [];
+         for (var i=1; i <= 8; i++) {
+            $scope.thumbnails.push("img/thumbnail" + i + ".jpeg");
+         };
+
+         $scope.imageGrid = [];
+
+         for (var i=0; i < $scope.thumbnails.length; i++) {
+            if (i%2 == 0) {
+               $scope.imageGrid.push([]);
             }
-          });
-        }
-      }
-    });
-  </script>
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand"><img src="img/logo_inverted_thumbnail.png" alt="Art Stream"></a>
+            $scope.imageGrid[$scope.imageGrid.length-1].push($scope.thumbnails[i]);
+         }
+
+         $scope.save = function () {
+            socket.emit('setupSave', $scope.data);
+            $scope.showSetup = false;
+         };
+
+         $scope.changeArt = function(indexY, indexX) {
+            $scope.focusIndexY = indexY;
+            $scope.focusIndexX = indexX;
+            $scope.selectImage = 2 * indexY + indexX; 
+            socket.emit('changeArt', $scope.selectImage);
+         };
+
+         socket.emit('setupEnter');
+      });
+      app.directive("moveNextOnMaxlength", function() {
+         return {
+            restrict: "A",
+            link: function($scope, element) {
+               element.on("input", function(e) {
+                  if(element.val().length == element.attr("maxlength")) {
+                     var $nextElement = element.next();
+                     if($nextElement.length) {
+                        $nextElement[0].focus();
+                     }
+                  }
+               });
+            }
+         }
+      });
+   </script>
+   <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"><img src="img/logo_inverted_thumbnail.png" alt="Art Stream"></a>
+         </div>
+         <div id="navbar" class="collapse navbar-collapse">
+            <h2 class="navbar-text navbar-right">{{ showSetup ? 'Connected To Screen' : 'Select Your New Art' }}</h2>
+         </div><!--/.nav-collapse -->
       </div>
-    </div>
-  </nav>
-  <div class="container-fluid">
-    <h2>Connected to Screen</h2>
-    <form ng-submit="save()">
-      <div class="form-group">
-        <input type="number" class="form-control" required ng-model="data.pin" placeholder="PIN code" maxlength="4" move-next-on-maxlength>
-        <input type="text" class="form-control" required ng-model="data.name" placeholder="Name" move-next-on-maxlength>
-        <input type="text" class="form-control" required ng-model="data.location" placeholder="Location">
+   </nav>
+   <div class="container">
+      <div ng-if="showSetup">
+         <form ng-submit="save()">
+            <div class="form-group">
+               <input type="number" class="form-control" required ng-model="data.pin" placeholder="PIN code" maxlength="4" move-next-on-maxlength>
+               <input type="text" class="form-control" required ng-model="data.name" placeholder="Name" move-next-on-maxlength>
+               <input type="text" class="form-control" required ng-model="data.location" placeholder="Location">
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>
+         </form>
+         <span ng-show="error">An error occurred, please check your PIN!</span>
       </div>
-      <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>
-    </form>
-    <span ng-show="error">An error occurred, please check your PIN!</span>
-  </div>
+      <div ng-if="!showSetup">
+         <div class="art">
+            <table>
+               <tr ng-repeat="row in imageGrid" ng-init="indexY = $index">
+                  <td ng-click="changeArt(indexY, indexX)" class="art-item" ng-repeat="item in row" ng-init="indexX = $index" ng-class="{'highlight': indexX == focusIndexX && indexY == focusIndexY }">
+                     <img ng-src="{{item}}">
+                  </td>
+               </tr>
+            </table>
+         </div>
+      </div>
+   </div>
 </body>
 </html>
