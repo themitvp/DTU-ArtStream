@@ -5,13 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <style type="text/css"></style>
+  <link rel="stylesheet" href='css/flatly-bootstrap.min.css?1' type="text/css"/>
+  <style type="text/css">
+    body {
+      padding-top: 90px;
+      padding-bottom: 40px;
+    }
+    .navbar-brand {
+      padding: 0px;
+      height: 90px;
+    }
+    .navbar-brand>img {
+      height: 100%;
+      padding: 15px;
+      width: auto;
+    }
+
+    input {
+      margin-bottom: 15px;
+    }
+  </style>
 </head>
 <body>
   <script src="js/angular.min.js"></script>
   <script src="js/socket.io.js"></script>
   <script type="text/javascript">
-    angular.module('setupApp', []).controller('mainController', function ($scope) {
+    var app = angular.module('setupApp', []).controller('mainController', function ($scope) {
       var socket = io.connect();
       socket.on('setupStatus', function (success) {
         $scope.$apply(function () {
@@ -20,23 +39,48 @@
       });
 
       $scope.data = {};
+      
       $scope.save = function () {
         socket.emit('setupSave', $scope.data);
       };
 
       socket.emit('setupEnter');
     });
+    app.directive("moveNextOnMaxlength", function() {
+      return {
+        restrict: "A",
+        link: function($scope, element) {
+          element.on("input", function(e) {
+            if(element.val().length == element.attr("maxlength")) {
+              var $nextElement = element.next();
+              if($nextElement.length) {
+                $nextElement[0].focus();
+              }
+            }
+          });
+        }
+      }
+    });
   </script>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand"><img src="img/logo_inverted_thumbnail.png" alt="Art Stream"></a>
+      </div>
+    </div>
+  </nav>
   <div class="container-fluid">
     <h2>Connected to Screen</h2>
     <form ng-submit="save()">
       <div class="form-group">
-        <input type="text" class="form-control" required ng-model="data.pin" placeholder="PIN code">
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" required ng-model="data.name" placeholder="Name">
-      </div>
-      <div class="form-group">
+        <input type="number" class="form-control" required ng-model="data.pin" placeholder="PIN code" maxlength="4" move-next-on-maxlength>
+        <input type="text" class="form-control" required ng-model="data.name" placeholder="Name" move-next-on-maxlength>
         <input type="text" class="form-control" required ng-model="data.location" placeholder="Location">
       </div>
       <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>

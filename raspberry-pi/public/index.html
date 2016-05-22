@@ -2,6 +2,7 @@
 <html lang="en" ng-app="raspberryPiApp" ng-controller="mainController">
 <head>
 	<meta charset="UTF-8">
+	<link href="http://fonts.googleapis.com/css?family=Poiret+One|Lato:100,300" rel="stylesheet" type="text/css">
 	<script src="js/jquery-1.12.3.min.js"></script>
 	<script src="js/jquery-migrate-1.2.1.min.js"></script>
 	<script src="js/angular.min.js"></script>
@@ -9,6 +10,7 @@
 	<style type="text/css">
 		html {
 			box-sizing: border-box;
+			font-family: 'Lato';
 		}
 		*, *:before, *:after {
 			box-sizing: inherit;
@@ -33,14 +35,13 @@
 
 		.menu {
 			position: absolute;
-			top: 10%;
-			left: 10%;
-			width: 80%;
-			height: 80%;
-			background: rgba(255, 255, 255, 0.95);
-			border: 2px solid #2F2F2F;
-			border-radius: 5px;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.3);
 			overflow: auto;
+			color: white;
 		}
 
 		.menu.ng-enter,
@@ -120,13 +121,13 @@
 			display: block;
 		}
 
+		.logo {
+			margin-bottom: 25px;
+		}
+
 		.highlight {
 			background: #dedede;
 			border-color: #A0A0A0;
-		}
-
-		.title {
-			color: #1A5286;
 		}
 	</style>
 </head>
@@ -136,8 +137,6 @@
 	<div ng-if="showMenu" class="menu">
 		<div class="menu-inner">
 			<h1 class="navigation-menu">Menu</h1>
-			<!--<p>Dismiss Timer: {{countDown}}s</p>-->
-			
 			<table>
 				<tr ng-repeat="row in imageGrid" ng-init="indexY = $index">
 					<td class="art-item" ng-repeat="item in row" ng-init="indexX = $index" ng-class="{'highlight': indexX == focusIndexX && indexY == focusIndexY }">
@@ -152,9 +151,8 @@
 		<div class="menu-inner">
 			<div class="menu-center">
 				<div class="menu-center-center">
-					<div class="title">
-						<h1>Welcome to ArtStream</h1>
-						<h3>The Digital Art Experience</h3>
+					<div>
+						<img class="logo" src="img/logo_inverted.png" height="200">
 					</div>
 					<div ng-hide="pin">
 						<h3>To get started please enter the following URL or scan the QR code on any device:</h3>
@@ -197,13 +195,18 @@
 				$scope.images.push("img/img" + i + ".jpeg");
 			};
 
+			$scope.thumbnails = [];
+			for (var i=1; i <= 8; i++) {
+				$scope.thumbnails.push("img/thumbnail" + i + ".jpeg");
+			};
+
 			$scope.imageGrid = [];
 
-			for (var i=0; i < $scope.images.length; i++) {
+			for (var i=0; i < $scope.thumbnails.length; i++) {
 				if (i%4 == 0) {
 					$scope.imageGrid.push([]);
 				}
-				$scope.imageGrid[$scope.imageGrid.length-1].push($scope.images[i]);
+				$scope.imageGrid[$scope.imageGrid.length-1].push($scope.thumbnails[i]);
 			}
 			console.log($scope.imageGrid);
 
