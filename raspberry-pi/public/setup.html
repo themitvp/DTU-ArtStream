@@ -70,7 +70,7 @@
       .highlight {
          border-color: #2C3E50;
       }
-  </style>
+   </style>
 </head>
 <body>
    <script src="js/angular.min.js"></script>
@@ -83,6 +83,10 @@
                $scope.error = !success;
                $scope.success = success;
                console.log("setupStatus: " + success);
+
+               if ($scope.success) {
+                  $scope.showSetup = false;
+               }
             });
          });
 
@@ -109,33 +113,14 @@
 
          $scope.save = function () {
             socket.emit('setupSave', $scope.data);
-            console.log("saved data, success is " + $scope.success);
-            if ($scope.success) {
-               console.log("saved data");
-               //$scope.showSetup = false;
-            }
          };
 
-         socket.on('setupSave', function (data) {
-            $scope.$apply(function () {
-               console.log("setupSave: " + data);
-            });
-         });
-
-         $scope.$watch("$scope.success", function(newValue, oldValue) {
-            console.log("sucess (old):" + oldValue);
-            console.log("sucess (new):" + newValue);
-            if (newValue == true) {
-               //$scope.showSetup = false;
-            }
-         });
-
-         /*$scope.changeArt = function(indexY, indexX) {
+         $scope.changeArt = function(indexY, indexX) {
             $scope.focusIndexY = indexY;
             $scope.focusIndexX = indexX;
             $scope.selectImage = 2 * indexY + indexX; 
             socket.emit('changeArt', $scope.selectImage);
-         };*/
+         };
 
          socket.emit('setupEnter');
       });
