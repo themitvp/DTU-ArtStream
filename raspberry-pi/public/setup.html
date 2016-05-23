@@ -82,6 +82,7 @@
             $scope.$apply(function () {
                $scope.error = !success;
                $scope.success = success;
+               console.log("setupStatus: " + success);
             });
          });
 
@@ -108,11 +109,18 @@
 
          $scope.save = function () {
             socket.emit('setupSave', $scope.data);
-            
-            /*if ($scope.success) {
-               $scope.showSetup = false;
-            }*/
+            console.log("saved data, success is " + $scope.success);
+            if ($scope.success) {
+               console.log("saved data");
+               //$scope.showSetup = false;
+            }
          };
+
+         socket.on('setupSave', function (data) {
+            $scope.$apply(function () {
+               console.log("setupSave: " + data);
+            });
+         });
 
          $scope.$watch("$scope.success", function(newValue, oldValue) {
             console.log("sucess (old):" + oldValue);
