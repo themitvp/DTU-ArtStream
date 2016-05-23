@@ -81,9 +81,11 @@
          socket.on('setupStatus', function (success) {
             $scope.$apply(function () {
                $scope.error = !success;
+               $scope.success = success;
             });
          });
 
+         $scope.success = false;
          $scope.showSetup = true;
          $scope.selectImage = 0;
          $scope.focusIndexX = 0;
@@ -106,7 +108,10 @@
 
          $scope.save = function () {
             socket.emit('setupSave', $scope.data);
-            //$scope.showSetup = false;
+            
+            if ($scope.success) {
+               $scope.showSetup = false;
+            }
          };
 
          $scope.changeArt = function(indexY, indexX) {
