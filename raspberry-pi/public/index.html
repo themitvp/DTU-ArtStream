@@ -275,10 +275,7 @@
 				$scope.$apply(function () {
 					$scope.name = data.name;
 					$scope.location = data.location;
-					
-					if (!$scope.error) {
-						$scope.showSetup = false;
-					}
+					$scope.showSetup = false;
 				});
 			});
 			socket.on('setupUrl', function (url) {
