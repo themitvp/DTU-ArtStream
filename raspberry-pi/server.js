@@ -31,13 +31,6 @@ io.on('connection', function (socket) {
     
     socket.emit('setupStatus', match);
   });
-  socket.on('changeArt', function (imageIndex) {
-    console.log('changeArt', imageIndex);
-
-    if (!imageIndex) return;
-
-    socket.broadcast.emit('changeArt', imageIndex);
-  });
   socket.on('setupUrl', function () {
     socket.emit('setupUrl', 'http://'+ip.address()+'/setup');
     console.log('setupUrl');

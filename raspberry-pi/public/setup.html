@@ -109,17 +109,25 @@
          $scope.save = function () {
             socket.emit('setupSave', $scope.data);
             
-            if ($scope.success) {
+            /*if ($scope.success) {
                $scope.showSetup = false;
-            }
+            }*/
          };
 
-         $scope.changeArt = function(indexY, indexX) {
+         $scope.$watch("$scope.success", function(newValue, oldValue) {
+            console.log("sucess (old):" + oldValue);
+            console.log("sucess (new):" + newValue);
+            if (newValue == true) {
+               //$scope.showSetup = false;
+            }
+         });
+
+         /*$scope.changeArt = function(indexY, indexX) {
             $scope.focusIndexY = indexY;
             $scope.focusIndexX = indexX;
             $scope.selectImage = 2 * indexY + indexX; 
             socket.emit('changeArt', $scope.selectImage);
-         };
+         };*/
 
          socket.emit('setupEnter');
       });
